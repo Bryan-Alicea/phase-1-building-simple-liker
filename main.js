@@ -4,8 +4,34 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+function init(){
+ document.querySelectorAll('article footer ul li span').forEach(function(element){
+  element.addEventListener('click', function(event){
+    
+    mimicServerCall()
+    .then(function(response){
+     if (event.target.innerHTML === EMPTY_HEART){
+      event.target.innerHTML = FULL_HEART
+      event.target.className = "activated-heart"
+     } else {
+      event.target.innerHTML = EMPTY_HEART
+      event.target.className = 'like-glyph'
+     }
 
+    })
+    .catch(function(error){
+      const errorElement = document.querySelector('div')
+      if(error){
+        errorElement.className = ''
+      }
+      setTimeout(() => errorElement.className = "hidden", 3000)
+    })
+  })
+ })
+ 
+}
 
+document.addEventListener("DOMContentLoaded", init)
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
